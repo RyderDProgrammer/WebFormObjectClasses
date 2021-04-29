@@ -2,7 +2,8 @@ class Car
 {
     car:string;
     price:number;
-    dieselorgas:boolean; //boolean for 0 is diesel(false) 1 is gas(true)
+    year:number;
+    dieselorgas:string;
     brand:string;
 }
 
@@ -30,7 +31,25 @@ function dataIsValid()
 
 function getCar():Car
 {
-    return;
+    let brandNewCar = new Car();
+    
+    let carName = <HTMLInputElement>$("car");
+    brandNewCar.car = carName.value;
+
+    let carPrice = <HTMLInputElement>$("price");
+    brandNewCar.price = parseFloat(carPrice.value);
+
+    let carYear = <HTMLInputElement>$("year");
+    brandNewCar.year = parseFloat(carYear.value);
+
+    let carGas = <HTMLInputElement>$("dieselGas");
+    brandNewCar.dieselorgas = carGas.value;
+
+    let carBrand = <HTMLSelectElement>$("brand");
+    brandNewCar.brand = carBrand.value;
+
+    console.log(brandNewCar);
+    return brandNewCar;
 }
 
 function showCar(theCar:Car):void
