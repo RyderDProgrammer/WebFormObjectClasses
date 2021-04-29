@@ -1,0 +1,24 @@
+body
+{
+    background-color: pink;
+}
+
+h1
+{
+    width: 90%;
+    display: inline-block;
+    text-align: center;
+}
+
+form
+{
+    width: 50%;
+    display: inline-block;
+    text-align: right;
+}
+
+input[type=button]
+{
+    color: blue;
+    margin-left: 42%;
+}
