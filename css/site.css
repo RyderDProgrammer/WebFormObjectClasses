@@ -3,12 +3,13 @@ body
     background-color: pink;
 }
 
-h1
+h1,h3
 {
     width: 90%;
     display: inline-block;
     text-align: center;
 }
+
 
 form
 {

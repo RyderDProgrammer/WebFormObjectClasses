@@ -16,6 +16,8 @@ window.onload = function()
 function chooseCar()
 {
     console.log("Car was chosen!");
+    clearErrors();
+
 
     if(dataIsValid())
     {
@@ -26,7 +28,54 @@ function chooseCar()
 
 function dataIsValid()
 {
-    return true;
+    let boolFlag = true;
+
+    let carName = getInputById("carName").value;
+    if(carName == "")
+    {
+        boolFlag = false;
+        addErrors("I need a car name");
+    }
+
+    let carYear = getInputById("year").value;
+    let carYearRef = parseFloat(carYear);
+    if(carYear == "" || isNaN(carYearRef) || carYearRef < 1886)
+    {
+        boolFlag = false;
+        addErrors("The year has to exist and can't be below 1886");
+    }
+
+    let carPrice = getInputById("price").value;
+    let carVal = parseFloat(carPrice);
+    if(carPrice == "" || isNaN(carVal) || carVal <= 0)
+    {
+        boolFlag = false;
+        addErrors("The car has to have a value")
+    }
+
+    let carOil = getInputById("dieselGas").value;
+    if(carOil.toUpperCase() != "GAS" && carOil.toUpperCase() != "DIESEL")
+    {
+        boolFlag = false;
+        addErrors("I only sell diesel or gasoline based engines.")
+    }
+
+    let carBrand = (<HTMLOptionElement>$("brand")).value;
+    if(carBrand == "")
+    {
+        boolFlag = false;
+        addErrors("You need a brand of car")
+    }
+
+    return boolFlag;
+}
+
+function addErrors(errorMessage:string)
+{
+    let errorSummary = getInputById("validationInfo");
+    let errorItem = document.createElement("li");
+    errorItem.innerText = errorMessage;
+    errorSummary.appendChild(errorItem);
 }
 
 function getCar():Car
@@ -56,8 +105,8 @@ function showCar(theCar:Car):void
 {
     let displayDiv = $("carListing");
 
-    let carHeading = document.createElement("h2");
-    carHeading.innerText = theCar.carName;
+    // let carHeading = document.createElement("h2");
+    // carHeading.innerText = theCar.carName;
 
     let oilType = "";
     if(theCar.dieselorgas.toUpperCase() == "GAS" )
@@ -74,11 +123,21 @@ function showCar(theCar:Car):void
 
     let carInfo = document.createElement("p");
 
-    carInfo.innerText = `You chose a ${theCar.year} ${theCar.carName} made by ${theCar.brand} costing a total of $${theCar.price.toFixed(2)} and it ${oilType}`;
+    carInfo.innerText = `You chose a ${theCar.year} ${theCar.carName} made by ${theCar.brand}, costing a total of $${theCar.price.toFixed(2)} and it ${oilType}`;
     displayDiv.appendChild(carInfo);
 }
 
 function $(id:string)
 {
     return document.getElementById(id);
+}
+
+function getInputById(id:string):HTMLInputElement
+{
+    return <HTMLInputElement>$(id);
+}
+
+function clearErrors()
+{
+    $("validationInfo").innerText = "";
 }
